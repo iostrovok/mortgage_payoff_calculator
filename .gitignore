@@ -31,7 +31,20 @@ yarn-error.*
 *.pem
 
 # local env files
-.env*.local
+.local
+.env
 
 # typescript
 *.tsbuildinfo
+
+# Generated
+task.txt
+CLAUDE.md
+
+# Log files
+*.log
+
+# IDE files
+.idea/
+.vscode/
+*.vscode
