@@ -169,17 +169,51 @@ Check server status and configuration.
 
 ## Deployment
 
-### Vercel (Recommended for Web)
-1. Build the web version: `npx expo export:web`
-2. Deploy the `dist` folder to Vercel
-3. Configure Vercel to serve the static files
+### Quick Deploy to Vercel
 
-### Expo Application Services (EAS)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/YOUR_USERNAME/mortgage-payoff-calculator)
+
+### Manual Deployment to Vercel
+
+1. **Push to GitHub:**
+```bash
+git add .
+git commit -m "Deploy to Vercel"
+git push origin main
+```
+
+2. **Deploy to Vercel:**
+   - Go to [vercel.com](https://vercel.com)
+   - Import your GitHub repository
+   - Configure build settings:
+     - Framework: Other
+     - Build Command: `npm run build`
+     - Output Directory: `web-build`
+
+3. **Set Environment Variables:**
+   - `OPENAI_API_KEY` - Your OpenAI API key
+   - `REACT_APP_API_URL` - Auto-configured for Vercel
+
+4. **Deploy!** - Your app will be live at `https://your-app-name.vercel.app`
+
+### Alternative Deployments
+
+#### Expo Application Services (EAS)
 For mobile app deployment:
 ```bash
 npm install -g @expo/cli
 npx expo build
 ```
+
+#### Other Platforms
+- **Netlify:** Deploy web-build folder
+- **Firebase Hosting:** Use expo export:web
+- **GitHub Pages:** Static hosting option
+
+### Deployment Files
+- See `DEPLOYMENT.md` for detailed instructions
+- See `DEPLOYMENT_CHECKLIST.md` for quick reference
+- `vercel.json` contains Vercel configuration
 
 ## Development Notes
 
