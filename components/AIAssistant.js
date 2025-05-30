@@ -9,7 +9,7 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
-import { parseNaturalLanguageQuery } from '../utils/mortgageCalculations';
+import { getOpenAIResponse } from '../utils/openaiService';
 
 const AIAssistant = ({ mortgageData }) => {
   const [messages, setMessages] = useState([
@@ -44,9 +44,9 @@ const AIAssistant = ({ mortgageData }) => {
     setInputText('');
     setIsLoading(true);
 
-    // Simulate AI processing delay
-    setTimeout(() => {
-      const response = parseNaturalLanguageQuery(messageText.trim(), mortgageData);
+    try {
+      // Get response from OpenAI
+      const response = await getOpenAIResponse(messageText.trim(), mortgageData);
       
       const assistantMessage = {
         id: Date.now() + 1,
@@ -56,8 +56,18 @@ const AIAssistant = ({ mortgageData }) => {
       };
 
       setMessages(prev => [...prev, assistantMessage]);
+    } catch (error) {
+      console.error('Error getting AI response:', error);
+      const errorMessage = {
+        id: Date.now() + 1,
+        type: 'assistant',
+        text: 'Sorry, I encountered an error processing your request. Please try again.',
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, errorMessage]);
+    } finally {
       setIsLoading(false);
-    }, 1000);
+    }
   };
 
   const formatTime = (timestamp) => {
@@ -104,7 +114,7 @@ const AIAssistant = ({ mortgageData }) => {
         
         {isLoading && (
           <View style={[styles.messageContainer, styles.assistantMessage]}>
-            <Text style={styles.loadingText}>Calculating...</Text>
+            <Text style={styles.loadingText}>AI is thinking...</Text>
           </View>
         )}
       </ScrollView>
