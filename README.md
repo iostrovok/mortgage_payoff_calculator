@@ -14,16 +14,19 @@ A mobile-first React Native application built with Expo that helps users calcula
 - Side-by-side comparison of payment scenarios
 - Clear visualization of time and money saved
 
-### 🤖 AI Assistant
-- Natural language mortgage queries
+### 🤖 AI Assistant (OpenAI Integration)
+- Natural language mortgage queries powered by GPT-3.5-turbo
 - Ask questions like "How much sooner if I add $300 per month?"
 - Intelligent parsing of payment amounts and timeframes
 - Conversational responses with personalized calculations
+- Secure REST API server for OpenAI integration
+- Real-time API integration with fallback to local calculations
 
 ## Technology Stack
 
 - **React Native** with Expo SDK 53
 - **Expo Web** for browser compatibility
+- **Express.js** REST API server for OpenAI integration
 - **react-native-chart-kit** for data visualization
 - **react-native-svg** for chart rendering
 - Functional components with React Hooks
@@ -47,15 +50,30 @@ cd mortgage_payoff_calculator
 npm install
 ```
 
+3. Set up environment variables:
+Create a `.env` file in the root directory:
+```bash
+OPENAI_API_KEY=your_openai_api_key_here
+```
+
 ## Available Scripts
 
 ### Development
 ```bash
+# Start both API server and web client (recommended)
+npm run dev
+
 # Start development server (all platforms)
 npm start
 
-# Start web development server
+# Start web development server only
 npm run web
+
+# Start API server only
+npm run server
+
+# Start API server with auto-reload (development)
+npm run server:dev
 
 # Start Android development
 npm run android
@@ -100,10 +118,53 @@ npx expo export:web
 │   ├── PayoffChart.js       # Chart visualization component
 │   └── AIAssistant.js       # Conversational AI interface
 ├── utils/
-│   └── mortgageCalculations.js  # Core calculation logic
+│   ├── mortgageCalculations.js  # Core calculation logic
+│   └── openaiService.js     # Client-side API service
+├── server.js                # Express.js REST API server
 ├── App.js                   # Main application component
 ├── app.json                 # Expo configuration
+├── .env                     # Environment variables (OpenAI API key)
 └── package.json            # Dependencies and scripts
+```
+
+## REST API Endpoints
+
+### POST /api/chat
+Send mortgage-related queries to the AI assistant.
+
+**Request:**
+```json
+{
+  "userQuery": "How much sooner if I add $300 per month?",
+  "mortgageData": {
+    "principal": 350000,
+    "rate": 6.5,
+    "term": 30,
+    "additionalPayment": 0,
+    "startDate": "2024-01-01T00:00:00.000Z"
+  }
+}
+```
+
+**Response:**
+```json
+{
+  "response": "Adding $300 per month would save you...",
+  "tokens": 245,
+  "model": "gpt-3.5-turbo"
+}
+```
+
+### GET /api/health
+Check server status and configuration.
+
+**Response:**
+```json
+{
+  "status": "ok",
+  "timestamp": "2024-05-30T17:45:23.456Z",
+  "openaiConfigured": true
+}
 ```
 
 ## Deployment
@@ -124,8 +185,9 @@ npx expo build
 
 - The app is optimized for mobile-first design but works great on desktop
 - Chart visualizations are responsive and adapt to screen size
-- AI assistant uses local calculations (no external API required)
-- All calculations are performed client-side for privacy
+- AI assistant integrates with OpenAI API (with local fallback)
+- Core mortgage calculations are performed client-side for privacy
+- Requires OpenAI API key for AI assistant functionality
 
 ## Contributing
 
