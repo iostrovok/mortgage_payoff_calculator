@@ -1,20 +1,24 @@
 # Mortgage Payoff Calculator
 
-A mobile-first React Native application built with Expo that helps users calculate how additional monthly principal payments affect their mortgage payoff date and total interest paid.
+A mobile-first React Native application built with Expo that helps users calculate how additional monthly principal
+payments affect their mortgage payoff date and total interest paid.
 
 ## Features
 
 ### 📊 Mortgage Calculator
+
 - Input loan amount, interest rate, loan term, and additional payments
 - Calculate new payoff date and interest savings
 - Compare original vs accelerated payment schedules
 
 ### 📈 Visual Analytics
+
 - Interactive chart showing loan balance over time
 - Side-by-side comparison of payment scenarios
 - Clear visualization of time and money saved
 
 ### 🤖 AI Assistant (OpenAI Integration)
+
 - Natural language mortgage queries powered by GPT-3.5-turbo
 - Ask questions like "How much sooner if I add $300 per month?"
 - Intelligent parsing of payment amounts and timeframes
@@ -34,24 +38,28 @@ A mobile-first React Native application built with Expo that helps users calcula
 ## Getting Started
 
 ### Prerequisites
+
 - Node.js (v16 or higher)
 - npm or yarn
 
 ### Installation
 
 1. Clone the repository:
+
 ```bash
 git clone <repository-url>
 cd mortgage_payoff_calculator
 ```
 
 2. Install dependencies:
+
 ```bash
 npm install
 ```
 
 3. Set up environment variables:
-Create a `.env` file in the root directory:
+   Create a `.env` file in the root directory:
+
 ```bash
 OPENAI_API_KEY=your_openai_api_key_here
 ```
@@ -59,6 +67,7 @@ OPENAI_API_KEY=your_openai_api_key_here
 ## Available Scripts
 
 ### Development
+
 ```bash
 # Start both API server and web client (recommended)
 npm run dev
@@ -83,6 +92,7 @@ npm run ios
 ```
 
 ### Building
+
 ```bash
 # Build for production (all platforms)
 npx expo export
@@ -92,6 +102,7 @@ npx expo export:web
 ```
 
 ### Stopping the Server
+
 - Press `Ctrl+C` in the terminal to stop the development server
 
 ## Usage
@@ -130,40 +141,45 @@ npx expo export:web
 ## REST API Endpoints
 
 ### POST /api/chat
+
 Send mortgage-related queries to the AI assistant.
 
 **Request:**
+
 ```json
 {
-  "userQuery": "How much sooner if I add $300 per month?",
-  "mortgageData": {
-    "principal": 350000,
-    "rate": 6.5,
-    "term": 30,
-    "additionalPayment": 0,
-    "startDate": "2024-01-01T00:00:00.000Z"
-  }
+    "userQuery": "How much sooner if I add $300 per month?",
+    "mortgageData": {
+        "principal": 350000,
+        "rate": 6.5,
+        "term": 30,
+        "additionalPayment": 0,
+        "startDate": "2024-01-01T00:00:00.000Z"
+    }
 }
 ```
 
 **Response:**
+
 ```json
 {
-  "response": "Adding $300 per month would save you...",
-  "tokens": 245,
-  "model": "gpt-3.5-turbo"
+    "response": "Adding $300 per month would save you...",
+    "tokens": 245,
+    "model": "gpt-3.5-turbo"
 }
 ```
 
 ### GET /api/health
+
 Check server status and configuration.
 
 **Response:**
+
 ```json
 {
-  "status": "ok",
-  "timestamp": "2024-05-30T17:45:23.456Z",
-  "openaiConfigured": true
+    "status": "ok",
+    "timestamp": "2024-05-30T17:45:23.456Z",
+    "openaiConfigured": true
 }
 ```
 
@@ -176,6 +192,7 @@ Check server status and configuration.
 ### Manual Deployment to Vercel
 
 1. **Push to GitHub:**
+
 ```bash
 git add .
 git commit -m "Deploy to Vercel"
@@ -183,34 +200,38 @@ git push origin main
 ```
 
 2. **Deploy to Vercel:**
-   - Go to [vercel.com](https://vercel.com)
-   - Import your GitHub repository
-   - Configure build settings:
-     - Framework: Other
-     - Build Command: `npm run build`
-     - Output Directory: `web-build`
+    - Go to [vercel.com](https://vercel.com)
+    - Import your GitHub repository
+    - Configure build settings:
+        - Framework: Other
+        - Build Command: `npm run build`
+        - Output Directory: `web-build`
 
 3. **Set Environment Variables:**
-   - `OPENAI_API_KEY` - Your OpenAI API key
-   - `REACT_APP_API_URL` - Auto-configured for Vercel
+    - `OPENAI_API_KEY` - Your OpenAI API key
+    - `REACT_APP_API_URL` - Auto-configured for Vercel
 
 4. **Deploy!** - Your app will be live at `https://your-app-name.vercel.app`
 
 ### Alternative Deployments
 
 #### Expo Application Services (EAS)
+
 For mobile app deployment:
+
 ```bash
 npm install -g @expo/cli
 npx expo build
 ```
 
 #### Other Platforms
+
 - **Netlify:** Deploy web-build folder
 - **Firebase Hosting:** Use expo export:web
 - **GitHub Pages:** Static hosting option
 
 ### Deployment Files
+
 - See `DEPLOYMENT.md` for detailed instructions
 - See `DEPLOYMENT_CHECKLIST.md` for quick reference
 - `vercel.json` contains Vercel configuration
