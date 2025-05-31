@@ -8,6 +8,7 @@
         "ios": "expo start --ios",
         "web": "expo start --web",
         "build": "expo export:web",
+        "vercel-build": "expo export:web --output-dir web-build",
         "server": "node server.js",
         "dev": "concurrently \"npm run server\" \"npm run web\"",
         "server:dev": "nodemon server.js",

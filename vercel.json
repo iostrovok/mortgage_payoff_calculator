@@ -1,34 +1,50 @@
 {
-    "version": 2,
-    "builds": [
+    "buildCommand": "npm run vercel-build",
+    "outputDirectory": "web-build",
+    "installCommand": "npm install",
+    "framework": null,
+    "rewrites": [
         {
-            "src": "server.js",
-            "use": "@vercel/node"
-        },
-        {
-            "src": "package.json",
-            "use": "@vercel/static-build",
-            "config": {
-                "distDir": "web-build"
-            }
+            "source": "/api/chat",
+            "destination": "/api/server"
         }
     ],
-    "routes": [
-        {
-            "src": "/api/(.*)",
-            "dest": "/server.js"
-        },
-        {
-            "src": "/(.*)",
-            "dest": "/web-build/$1"
-        }
-    ],
-    "env": {
-        "OPENAI_API_KEY": "@openai_api_key"
-    },
     "functions": {
-        "server.js": {
-            "maxDuration": 30
+        "api/server.js": {
+            "maxDuration": 30,
+            "memory": 1024
         }
-    }
+    },
+    "env": {
+        "NODE_ENV": "production",
+        "API_BASE_URL": "https://mortgage-payoff-calculator.vercel.app"
+    },
+    "headers": [
+        {
+            "source": "/static/(.*)",
+            "headers": [
+                {
+                    "key": "Cache-Control",
+                    "value": "public, max-age=31536000, immutable"
+                }
+            ]
+        },
+        {
+            "source": "/(.*)",
+            "headers": [
+                {
+                    "key": "X-Content-Type-Options",
+                    "value": "nosniff"
+                },
+                {
+                    "key": "X-Frame-Options",
+                    "value": "DENY"
+                },
+                {
+                    "key": "X-XSS-Protection",
+                    "value": "1; mode=block"
+                }
+            ]
+        }
+    ]
 }

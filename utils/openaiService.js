@@ -2,7 +2,7 @@ import {parseNaturalLanguageQuery} from './mortgageCalculations';
 
 // API server URL - adjust this based on your deployment
 const API_BASE_URL = process.env.REACT_APP_API_URL || (process.env.NODE_ENV === 'production'
-	? 'https://your-app-name.vercel.app'
+	? 'https://mortgage-payoff-calculator.vercel.app'
 	: 'http://localhost:3001');
 
 export const getOpenAIResponse = async (userQuery, mortgageData) => {
