@@ -13,8 +13,7 @@ const ResultsDisplay = ({results}) => {
 			  monthsSaved,
 			  originalPayoffDate,
 			  acceleratedPayoffDate,
-			  originalTotalInterest,
-			  acceleratedTotalInterest,
+			  originalTotalInterest, acceleratedTotalInterest, currentBalance, remainingTerm, paymentsMade, isAlreadyPaidOff,
 		  } = results;
 
 	const yearsSaved = Math.floor(monthsSaved / 12);
@@ -32,8 +31,36 @@ const ResultsDisplay = ({results}) => {
 		return `${remainingMonthsSaved} month${remainingMonthsSaved > 1 ? 's' : ''}`;
 	};
 
+	// Handle case where loan is already paid off
+	if (isAlreadyPaidOff) {
+		return (<ScrollView style={styles.container}>
+			<Text style={styles.title}>Loan Status</Text>
+			<View style={styles.section}>
+				<Text style={styles.sectionTitle}>✅ Loan Paid Off</Text>
+				<Text style={styles.subtitle}>Your mortgage appears to be already paid off based on the start date provided.</Text>
+			</View>
+		</ScrollView>);
+	}
+
 	return (<ScrollView style={styles.container}>
 		<Text style={styles.title}>Payoff Analysis Results</Text>
+
+		{paymentsMade > 0 && (<View style={styles.section}>
+			<Text style={styles.sectionTitle}>Current Loan Status</Text>
+			<View style={styles.statusRow}>
+				<Text style={styles.statusLabel}>Current Balance:</Text>
+				<Text style={styles.statusValue}>{formatCurrency(currentBalance)}</Text>
+			</View>
+			<View style={styles.statusRow}>
+				<Text style={styles.statusLabel}>Remaining Term:</Text>
+				<Text style={styles.statusValue}>{remainingTerm} years</Text>
+			</View>
+			<View style={styles.statusRow}>
+				<Text style={styles.statusLabel}>Payments Made:</Text>
+				<Text style={styles.statusValue}>{paymentsMade} payments</Text>
+			</View>
+			<Text style={styles.subtitle}>Based on loan start date in the past</Text>
+		</View>)}
 
 		<View style={styles.section}>
 			<Text style={styles.sectionTitle}>Monthly Payment</Text>
@@ -137,6 +164,12 @@ const styles = StyleSheet.create({
 		fontSize: 16, color: '#555', lineHeight: 24,
 	}, highlight: {
 		fontWeight: 'bold', color: '#007AFF',
+	}, statusRow: {
+		flexDirection: 'row', justifyContent: 'space-between', width: '100%', marginBottom: 8,
+	}, statusLabel: {
+		fontSize: 16, color: '#666',
+	}, statusValue: {
+		fontSize: 16, fontWeight: '600', color: '#333',
 	},
 });
 
