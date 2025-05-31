@@ -32,6 +32,7 @@ export const calculateMortgageDetails = (principal, annualRate, termYears, addit
 			// Loan would already be paid off
 			adjustedPrincipal = 0;
 			adjustedTermMonths = 0;
+			paymentsMade = monthsPassed; // Set paymentsMade for already paid off loans
 		}
 	}
 
