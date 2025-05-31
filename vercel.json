@@ -16,8 +16,8 @@
         }
     },
     "env": {
-        "OPENAI_API_KEY": "@openai_api_key",
-        "NODE_ENV": "production"
+        "NODE_ENV": "production",
+        "API_BASE_URL": "https://mortgage-payoff-calculator.vercel.app"
     },
     "headers": [
         {
